@@ -1,0 +1,562 @@
+{
+  "info": {
+    "_postman_id": "6d1a250b-b73c-4016-9fa5-30f8ce0366f6",
+    "name": "rafifPetstore_API",
+    "description": "Automation test collection for Petstore Swagger API with chaining & assertions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54099782"
+  },
+  "item": [
+    {
+      "name": "Create Pet",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "let jsonData = pm.response.json();",
+              "pm.environment.set('petId', jsonData.id);",
+              "",
+              "pm.test('Response has id', function () {",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 123456,\n  \"name\": \"rafifPet\",\n  \"status\": \"available\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pet",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Pet by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "let jsonData = pm.response.json();",
+              "pm.test('Pet ID match', function () {",
+              "    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get('petId')));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pet/{{petId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet",
+            "{{petId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Pet",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": {{petId}},\n  \"name\": \"doggie-updated\",\n  \"status\": \"sold\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pet",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Pet",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pet/{{petId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet",
+            "{{petId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Order",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "let jsonData = pm.response.json();",
+              "pm.environment.set('orderId', jsonData.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"petId\": 123456,\n  \"quantity\": 1,\n  \"status\": \"placed\",\n  \"complete\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/store/order",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "store",
+            "order"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Order by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/store/order/{{orderId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "store",
+            "order",
+            "{{orderId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Order Invalid ID (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 404', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/store/order/999999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "store",
+            "order",
+            "999999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Pet Invalid ID (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status should be 404', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pet/999999999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet",
+            "999999999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST empty payload /pet (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"POST empty payload - acceptable response\", function () {",
+              "    pm.expect([200, 400, 405]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pet",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT invalid pet ID (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"PUT invalid pet - acceptable response\", function () {",
+              "    pm.expect([200, 400, 404, 405]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 999999999,\n  \"name\": \"invalid-pet\",\n  \"status\": \"available\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pet",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE invalid pet (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"DELETE invalid pet - acceptable response\", function () {",
+              "    pm.expect([200, 404, 405]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pet/999999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet",
+            "999999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid status query (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Invalid status query - acceptable response\", function () {",
+              "    pm.expect([200, 400, 404]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/pet/findByStatus?status=unknown",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet",
+            "findByStatus"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "unknown"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Upload image invalid pet (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Upload invalid pet - acceptable response\", function () {",
+              "    pm.expect([200, 404, 500]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "multipart/form-data"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "value": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pet/999999999/uploadImage",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pet",
+            "999999999",
+            "uploadImage"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST order invalid payload (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"POST invalid order - acceptable response\", function () {",
+              "    pm.expect([200, 400, 500]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"invalid\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/store/order",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "store",
+            "order"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://petstore.swagger.io/v2"
+    },
+    {
+      "key": "petId",
+      "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ]
+}
